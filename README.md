@@ -12,19 +12,38 @@ This project will completely focus on age and gender prediction using Adience da
 
 ## Getting Started
 
-### To Download the Entire Adience Dataset
+To Download the Entire Adience Dataset:
 ```
 http://www.openu.ac.il/home/hassner/Adience/data.html
 ```
 
 ## Usage
 
-### Dataset Preparation
-
 ### Preprocessing
+
+ - mean_image.py Tool used to calculate either a mean image or BGR channels mean.
+
+```
+usage: compute_mean_image.py [-h] {bgr,img} ...
+
+positional arguments:
+  {bgr,img}
+    bgr       generate three channels mean [compute_mean_image.py' -bgr -h]
+    img       generate mean image [compute_mean_image.py' -img -h]
+
+optional arguments:
+  -h, --help  show this help message and exit
+```
+
+
 
 ### CNN Network
 
+
+
 ### Real-Time Prediction
+
+
+
 
 ## Reference
