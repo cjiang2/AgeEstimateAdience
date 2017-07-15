@@ -2,7 +2,7 @@
 Age and Gender Estimation Using Convolutional Neural Network with Adience Dataset
 
 ## Note
-This project will completely focus on age and gender prediction using Adience dataset. The purpose of this project is to construct and compare the training complexity, prediction accuracy and possibilitiy of real-time application among different CNN network architectures.
+This project will focus on age and gender prediction using Adience dataset. The purpose of this project is to construct and demo popular CNN network architectures using Tensorflow with image classification task.
 
 ## Prerequisites
 
