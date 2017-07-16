@@ -55,13 +55,13 @@ Two versions are provided for each CNN: raw implementations and tensorflow.contr
 
 Fine-tuning of the Network:
 
-	While the weights of GilNet and AlexNet are initialized with random normal variables, it is noted that weights initializing of a network(especially a large one like VGG) with random variables might not be a good idea. In the implementation of VGG-16 network, I'm finetuning weights from [VGG-Face](http://www.robots.ox.ac.uk/~vgg/software/vgg_face/) models.
+  While the weights of GilNet and AlexNet are initialized with random normal variables, it is noted that weights initializing of a network(especially a large one like VGG) with random variables might not be a good idea. In the implementation of VGG-16 network, I'm finetuning weights from [VGG-Face](http://www.robots.ox.ac.uk/~vgg/software/vgg_face/) models.
 
-	While the link does not provide a direct tensorflow model, however it does provide a Caffe version of weights file, and I'm recommanding [Caffe-tensorflow](https://github.com/ethereon/caffe-tensorflow) to convert weights into raw numpy files, which can be applied into tensorflow directly using constant initializer or assign operation. (See my [implementation of VGG-16 network](https://github.com/zonetrooper32/AgeEstimateAdience/blob/master/2_model/vgg16.py) to understand how to initialze weights with numpy arrays)
+  While the link does not provide a direct tensorflow model, however it does provide a Caffe version of weights file, and I'm recommanding [Caffe-tensorflow](https://github.com/ethereon/caffe-tensorflow) to convert weights into raw numpy files, which can be applied into tensorflow directly using constant initializer or assign operation. (See my [implementation of VGG-16 network](https://github.com/zonetrooper32/AgeEstimateAdience/blob/master/2_model/vgg16.py) to understand how to initialze weights with numpy arrays)
 
 Training Details:
 
-	-_- I'll fill this up after I finish up clean implementation version
+  -_- I'll fill this up after I finish up clean implementation version
 
 ### Real-Time Prediction
 
