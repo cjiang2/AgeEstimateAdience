@@ -39,7 +39,7 @@ class gilnet:
                 initializer=tf.random_normal_initializer(stddev=0.01),
                 regularizer=tf.contrib.layers.l2_regularizer(0.0005))
 
-            conv = tf.nn.conv2d(self.norm1, kernel, [1, 1, 1, 1], padding='VALID')
+            conv = tf.nn.conv2d(self.norm1, kernel, [1, 1, 1, 1], padding='SAME')
             biases = tf.Variable(tf.constant(0.0, shape=[256], dtype=tf.float32),
                                  trainable=True, name='conv2_b')
             out = tf.nn.bias_add(conv, biases)
@@ -61,7 +61,7 @@ class gilnet:
                 initializer=tf.random_normal_initializer(stddev=0.01),
                 regularizer=tf.contrib.layers.l2_regularizer(0.0005))
 
-            conv = tf.nn.conv2d(self.norm2, kernel, [1, 1, 1, 1], padding='VALID')
+            conv = tf.nn.conv2d(self.norm2, kernel, [1, 1, 1, 1], padding='SAME')
             biases = tf.Variable(tf.constant(0.0, shape=[384], dtype=tf.float32),
                                  trainable=True, name='conv3_b')
             out = tf.nn.bias_add(conv, biases)
