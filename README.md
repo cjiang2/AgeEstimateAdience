@@ -91,17 +91,18 @@ Two versions are provided for each CNN: raw implementations and tensorflow.contr
     --restore   retore a previous training procedure
   ```
 
-    Training procedure is done with a Momentum Optimizer. You can also use AdamOptimizer or SGD. I'm also applying Weight Regularization, learning rate decay and Exponential Moving Average operation during the training process.
+Training procedure is done with a Momentum Optimizer. You can also use AdamOptimizer or SGD. I'm also applying Weight Regularization, learning rate decay and Exponential Moving Average operation during the training process.
 
-    Training script will print out relevant training infos every 10 iterations. A model validation will be done every 100 iteration or by random(To make sure we get the model with best test accuracy).  Every 200 iterations, a tensorflow V1 format copy of the model along with iteration infos will be saved locally. The script will also be automatically saving model if the test accuracy is high enough. See the implementation to understand how training is done in general. 
+Training script will print out relevant training infos every 10 iterations. A model validation will be done every 100 iteration or by random(To make sure we get the model with best test accuracy).  Every 200 iterations, a tensorflow V1 format copy of the model along with iteration infos will be saved locally. The script will also be automatically saving model if the test accuracy is high enough. See the implementation to understand how training is done in general. 
 
   ### Relevant Statistics
 
-    Since it is easy to extract weights or layers given my implementation of CNN network class, you can easily monitor the overall training procedure. For starters, I'm recommanding [this](https://github.com/Hvass-Labs/TensorFlow-Tutorials/blob/master/02_Convolutional_Neural_Network.ipynb) tutorials which gives a detailed introduction on acquiring statistics including confusion matrix, layers outputs and etc. I'm also recommanding using TensorBoard.
+Since it is easy to extract weights or layers given my implementation of CNN network class, you can easily monitor the overall training procedure. For starters, I'm recommanding [this](https://github.com/Hvass-Labs/TensorFlow-Tutorials/blob/master/02_Convolutional_Neural_Network.ipynb) tutorials which gives a detailed introduction on acquiring statistics including confusion matrix, layers outputs and etc. I'm also recommanding using TensorBoard.
 
 ## Real-Time Prediction
 
-  - train.py A simple script for model training and testing
-
+  -_- Filling this place later
 
 ## Reference
+
+  -_- Filling this place later
