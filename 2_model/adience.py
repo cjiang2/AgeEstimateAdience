@@ -35,6 +35,7 @@ class AdienceIterator:
 				filenames[i] = cwd+"/"+filenames[i]
 			self.validate += filenames
 		random.shuffle(self.validate)
+		self.num_test = len(self.validate)
 
 	def _init_next_epoch(self, flag):
 		if flag=="tr":
