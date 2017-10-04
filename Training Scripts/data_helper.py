@@ -13,8 +13,8 @@ def load_dataset(dataset_file, validate_folder_no):
 			else:
 				train_data.append(hf["data_"+str(i)].value)
 				train_label.append(hf["labels_"+str(i)].value)
-		rgb_means = hf["rgb_means"].value.tolist()
-	return np.concatenate(train_data), np.concatenate(train_label), test_data, test_label, rgb_means[validate_folder_no - 1]
+		bgr_means = hf["bgr_means"].value.tolist()
+	return np.concatenate(train_data), np.concatenate(train_label), test_data, test_label, bgr_means[validate_folder_no - 1]
 
 def batch_iter(data, batch_size, num_epochs, shuffle=True):
 	"""
