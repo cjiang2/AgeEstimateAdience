@@ -5,24 +5,25 @@ import datetime
 import tensorflow as tf
 import data_helper
 
-from gilnet import gilnet
-#from alexnet import alexnet
+#from gilnet import gilnet
+from alexnet import alexnet
+#from vggface import VGGFace
 
 # Parameters settings
 # Data loading params
 tf.flags.DEFINE_string("dataset_file", "faces_dataset.h5", "Path for the h5py dataset.")
-tf.flags.DEFINE_integer("folder_to_test", 1, "Folder No. to be tested (default: 1)")
+tf.flags.DEFINE_integer("folder_to_test", 1, "No. of folder to be tested (default: 1)")
 
 # Model Hyperparameters
 tf.flags.DEFINE_float("dropout_keep_prob", 0.5, "Dropout keep probability (default: 0.5)")
-tf.flags.DEFINE_float("l2_reg_lambda", 0.001, "L2 regularization lambda (default: 0.001)")
+tf.flags.DEFINE_float("weight_decay", 5e-4, "Weight decay rate for L2 regularization (default: 5e-4)")
 
 # Training Parameters
 tf.flags.DEFINE_float("learning_rate", 1e-3, "Starter Learning Rate (default: 1e-2)")
 tf.flags.DEFINE_integer("batch_size", 64, "Batch Size (default: 128)")
-tf.flags.DEFINE_integer("num_epochs", 200, "Number of training epochs (default: 200)")
-tf.flags.DEFINE_integer("evaluate_every", 50, "Evaluate model on dev set after this many steps (default: 50)")
-tf.flags.DEFINE_boolean("enable_moving_average", False, "Enable usage of Exponential Moving Average (default: False)")
+tf.flags.DEFINE_integer("num_epochs", 50, "Number of training epochs (default: 200)")
+tf.flags.DEFINE_integer("evaluate_every", 20, "Evaluate model on dev set after this many steps (default: 50)")
+tf.flags.DEFINE_boolean("enable_moving_average", True, "Enable usage of Exponential Moving Average (default: True)")
 
 FLAGS = tf.flags.FLAGS
 FLAGS._parse_flags()
@@ -35,15 +36,26 @@ print("")
 # Data Preparation
 # Load data
 print("Loading data...")
-train_data, train_label, test_data, test_label, rgb_mean = data_helper.load_dataset(FLAGS.dataset_file, FLAGS.folder_to_test)
-rgb_mean = [round(x, 2) for x in rgb_mean]
+train_data, train_label, test_data, test_label, bgr_mean = data_helper.load_dataset(FLAGS.dataset_file, FLAGS.folder_to_test)
+# bgr_mean, mean_img
+bgr_mean = [round(x, 4) for x in bgr_mean]
 
 # ConvNet
 acc_list = [0]
+loss_train_list = [0]
+loss_test_list = [0]
 sess = tf.Session()
-cnn = gilnet(rgb_mean=rgb_mean, 
-			 l2_reg_lambda=FLAGS.l2_reg_lambda, 
-			 enable_moving_average=FLAGS.enable_moving_average)
+
+# Gilnet, AlexNet
+cnn = alexnet(bgr_mean=bgr_mean, 
+weight_decay=FLAGS.weight_decay, 
+enable_moving_average=FLAGS.enable_moving_average)
+
+# VGGFace
+#cnn = VGGFace(bgr_mean=[93.5940, 104.7624, 129.1863], 
+#weight_decay=FLAGS.weight_decay, 
+#enable_moving_average=FLAGS.enable_moving_average,
+#weight_file="vggface_weights.npz")
 
 # Optimizer and LR Decay
 global_step = tf.Variable(0, name="global_step", trainable=False)
@@ -52,6 +64,7 @@ lr_decay_fn = lambda lr, global_step : tf.train.exponential_decay(lr, global_ste
 train_op = tf.contrib.layers.optimize_loss(loss=cnn.loss, global_step=global_step, clip_gradients=4.0,
 	learning_rate=FLAGS.learning_rate, optimizer=lambda lr: optimizer, learning_rate_decay_fn=lr_decay_fn)
 #grads_and_vars = optimizer.compute_gradients(cnn.loss)
+#train_op = optimizer.apply_gradients(grads_and_vars, global_step=global_step)
 
 # Initialize Graph
 sess.run(tf.global_variables_initializer())
