@@ -63,7 +63,7 @@ cnn = VGGFace(bgr_mean=[93.5940, 104.7624, 129.1863],
 weight_decay=FLAGS.weight_decay, 
 enable_moving_average=FLAGS.enable_moving_average,
 weight_file="vggface_weights.npz")
-#vgg_known_acc_max = [0.65, 0.51, 0.59, 0.49, 0.59]
+vgg_known_acc_max = [0.65, 0.51, 0.59, 0.49, 0.59]
 
 # Optimizer and LR Decay
 global_step = tf.Variable(0, name="global_step", trainable=False)
@@ -76,16 +76,14 @@ train_op = tf.contrib.layers.optimize_loss(loss=cnn.loss, global_step=global_ste
 
 # Checkpoint directory. 
 # Tensorflow assumes this directory already exists so we need to create it
-#timestamp = str(int(time.time()))
-#out_dir = os.path.abspath(os.path.join(os.path.curdir, "runs", timestamp))
-#out_dir = os.path.join(os.path.expanduser('~'), 'volume', "runs", timestamp)
-#print("Writing to {}\n".format(out_dir))
-#checkpoint_dir = os.path.abspath(os.path.join(out_dir, "checkpoints"))
-#checkpoint_prefix = os.path.join(checkpoint_dir, "model")
-#print(checkpoint_prefix)
-#if not os.path.exists(checkpoint_dir):
-	#os.makedirs(checkpoint_dir)
-#saver = tf.train.Saver(tf.global_variables(), max_to_keep=5)
+timestamp = str(int(time.time()))
+out_dir = os.path.join(os.path.expanduser('~'), 'volume', "runs", timestamp)
+print("Writing to {}\n".format(out_dir))
+checkpoint_dir = os.path.abspath(os.path.join(out_dir, "checkpoints"))
+checkpoint_prefix = os.path.join(checkpoint_dir, "model")
+if not os.path.exists(checkpoint_dir):
+	os.makedirs(checkpoint_dir)
+saver = tf.train.Saver(tf.global_variables(), max_to_keep=5)
 
 # Initialize Graph
 sess.run(tf.global_variables_initializer())
@@ -140,6 +138,6 @@ for train_batch in train_batches:
 		print("{}: Evaluation Summary, Loss {:g}, Acc {:g}".format(time_str, sum_loss/i, acc))
 		print("{}: Current Max Acc {:g} with in Iteration {}".format(time_str, max(acc_list), int(acc_list.index(max(acc_list))*FLAGS.evaluate_every)))
 
-		#if max(acc_list) > vgg_known_acc_max[FLAGS.folder_to_test - 1]:
-			#path = saver.save(sess, checkpoint_prefix, global_step=current_step)
-			#print("Saved current model checkpoint with max accuracy to {}\n".format(path))
+		if max(acc_list) > vgg_known_acc_max[FLAGS.folder_to_test - 1]:
+			path = saver.save(sess, checkpoint_prefix, global_step=current_step)
+			print("Saved current model checkpoint with max accuracy to {}\n".format(path))
